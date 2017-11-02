@@ -4,20 +4,20 @@ import android.graphics.Color;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
-import android.view.View;
 import android.widget.Button;
 
 import java.util.ArrayList;
-import java.util.Random;
 
 public class MainActivity extends AppCompatActivity {
+    private final Handler handler = new Handler();
+
     //private TextView textview;
     private Button buttonOne;
     private Button buttonTwo;
     private Button buttonThree;
     private Button buttonFour;
     //randomly generated
-    int randomColor[] = {Color.RED, Color.BLUE,Color.YELLOW, Color.GREEN};
+    int randomColor[] = {Color.RED, Color.BLUE, Color.YELLOW, Color.GREEN};
     // random color
     ArrayList<Integer> randomSimon = new ArrayList<>();
     // play color
@@ -36,46 +36,29 @@ public class MainActivity extends AppCompatActivity {
         buttonTwo.setText("Blue");
         buttonThree.setText("Red");
         buttonFour.setText("Green");
-        Handler handler = new Handler();
+
+        startSimon();
+
         handler.postDelayed(new Runnable() {
             @Override
             public void run() {
-                startSimon();
-                try {
-                    Thread.sleep(3000);
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
-                }
-
-                switchBack();
-
-
-
-
+                simonsTurn();
             }
         }, 5000);
 
-
-
-
-    }
-
-    public void button(View view) {
-
+        handler.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                switchBack();
+            }
+        }, 6000);
     }
 
     //add random color to simon's arraylist
     public void startSimon() {
-        int simonColor = (randomColor[new Random().nextInt(randomColor.length)]);
-
-        for (int Color:randomColor){
+        for (int Color : randomColor) {
             randomSimon.add(Color);
-
-
         }
-
-
-
     }
 
     public void simonsTurn() {
@@ -93,17 +76,11 @@ public class MainActivity extends AppCompatActivity {
                 case Color.GREEN:
                     buttonFour.setBackgroundColor(buttonFour.getContext().getResources().getColor(R.color.colorWhite));
                     break;
-
-
-
             }
-
-
-
         }
-
     }
-    public void switchBack(){
+
+    public void switchBack() {
         for (Integer simonColor : randomSimon) {
             switch (simonColor) {
                 case Color.YELLOW:
@@ -126,7 +103,8 @@ public class MainActivity extends AppCompatActivity {
 
 
     }
-    public void playersTurn(Integer Color){
+
+    public void playersTurn(Integer Color) {
 
 
 
